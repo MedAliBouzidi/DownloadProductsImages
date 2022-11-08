@@ -18,6 +18,8 @@ if not os.path.exists('images'):
 
 total_num = len(links)
 
+ssl._create_default_https_context = ssl._create_unverified_context
+
 for idx, image in enumerate(links, start=1):
     image_url = image['link']  # the image on the web
     save_name = f'images/{image["name"]}'  # local name to be saved
