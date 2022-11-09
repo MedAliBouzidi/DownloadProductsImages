@@ -23,5 +23,6 @@ ssl._create_default_https_context = ssl._create_unverified_context
 for idx, image in enumerate(links, start=1):
     image_url = image['link']  # the image on the web
     save_name = f'images/{image["name"]}'  # local name to be saved
-    urllib.request.urlretrieve(image_url, save_name)
+    if not os.path.exists(save_name):
+        urllib.request.urlretrieve(image_url, save_name)
     print(f'{idx}/{total_num}')
