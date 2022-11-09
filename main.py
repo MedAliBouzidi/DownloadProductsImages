@@ -3,6 +3,13 @@ import os
 import ssl
 import urllib.request
 
+import unidecode as unidecode
+
+
+def normalize(s):
+    return unidecode.unidecode(s).lower()
+
+
 links = []
 with open('Products.json', encoding='utf-8') as f:
     data = json.load(f)
@@ -10,7 +17,7 @@ with open('Products.json', encoding='utf-8') as f:
         ext = d['image'].split('/')[-1].split('.')[-1]
         links.append({
             'name': f'{d["_id"]["$oid"]}.{ext}',
-            'link': d['image']
+            'link': normalize(d['image'])
         })
 
 if not os.path.exists('images'):
@@ -20,7 +27,7 @@ total_num = len(links)
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-chunks = [links[index:index+2000] for index in range(0, len(links), 2000)]
+chunks = [links[index:index + 2000] for index in range(0, len(links), 2000)]
 
 idx = 0
 for chunk in chunks:
