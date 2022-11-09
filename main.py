@@ -20,9 +20,14 @@ total_num = len(links)
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-for idx, image in enumerate(links, start=1):
-    image_url = image['link']  # the image on the web
-    save_name = f'images/{image["name"]}'  # local name to be saved
-    if not os.path.exists(save_name):
-        urllib.request.urlretrieve(image_url, save_name)
-    print(f'{idx}/{total_num}')
+chunks = [links[index:index+2000] for index in range(0, len(links), 2000)]
+
+idx = 0
+for chunk in chunks:
+    for image in chunk:
+        image_url = image['link']  # the image on the web
+        save_name = f'images/{image["name"]}'  # local name to be saved
+        if not os.path.exists(save_name):
+            urllib.request.urlretrieve(image_url, save_name)
+        idx += 1
+        print(f'{idx}/{total_num}')
