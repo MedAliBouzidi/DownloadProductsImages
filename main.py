@@ -6,7 +6,7 @@ import unidecode as unidecode
 
 
 def normalize(s):
-    return unidecode.unidecode(s).lower()
+    return unidecode.unidecode(s)
 
 
 links = []
