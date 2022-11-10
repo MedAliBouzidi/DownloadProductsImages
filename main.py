@@ -33,6 +33,8 @@ for index, chunk in enumerate(chunks, start=1):
     for image in chunk:
         image_url = image['link']  # the image on the web
         save_name = f'images/{index}/{image["name"]}'  # local name to be saved
+        if not os.path.exists(f'images/{index}'):
+            os.mkdir(f'images/{index}')
         if not os.path.exists(save_name):
             try:
                 urllib.request.urlretrieve(image_url, save_name)
