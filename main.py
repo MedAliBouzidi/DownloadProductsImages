@@ -28,6 +28,15 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 chunks = [links[index:index + 2000] for index in range(0, len(links), 2000)]
 
+if not os.path.exists('json'):
+    os.mkdir('json')
+
+i = 1
+for index in range(0, len(links), 5000):
+    with open(f'json/j{i}.json', 'w', encoding='utf-8') as f:
+        json.dump(links[index:index + 5000], f)
+        i += 1
+
 idx = 0
 for index, chunk in enumerate(chunks, start=1):
     for image in chunk:
