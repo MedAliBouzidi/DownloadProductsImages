@@ -2,7 +2,6 @@ import json
 import os
 import ssl
 import urllib.request
-
 import unidecode as unidecode
 
 
@@ -30,11 +29,14 @@ ssl._create_default_https_context = ssl._create_unverified_context
 chunks = [links[index:index + 2000] for index in range(0, len(links), 2000)]
 
 idx = 0
-for chunk in chunks:
+for index, chunk in enumerate(chunks, start=1):
     for image in chunk:
         image_url = image['link']  # the image on the web
-        save_name = f'images/{image["name"]}'  # local name to be saved
+        save_name = f'images/{index}/{image["name"]}'  # local name to be saved
         if not os.path.exists(save_name):
-            urllib.request.urlretrieve(image_url, save_name)
+            try:
+                urllib.request.urlretrieve(image_url, save_name)
+            except:
+                continue
         idx += 1
         print(f'{idx}/{total_num}')
