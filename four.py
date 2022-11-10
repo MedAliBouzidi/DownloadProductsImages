@@ -15,6 +15,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 total_num = len(links)
 
+status = ''
 for idx, image in enumerate(links, start=1):
     image_url = image['link']  # the image on the web
     save_name = f'images/{index}/{image["name"]}'  # local name to be saved
@@ -23,7 +24,8 @@ for idx, image in enumerate(links, start=1):
     if not os.path.exists(save_name):
         try:
             urllib.request.urlretrieve(image_url, save_name)
+            status = 'done'
         except:
-            continue
+            status = 'fail'
+    print(f'{idx}/{total_num} - {status}')
     idx += 1
-    print(f'{idx}/{total_num}')
