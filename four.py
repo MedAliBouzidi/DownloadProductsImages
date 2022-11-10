@@ -4,9 +4,9 @@ import json
 import urllib.request
 
 index = 4
-links = []
+
 with open('json/j4.json', encoding='utf-8') as f:
-    data = json.load(f)
+    links = json.load(f)
 
 if not os.path.exists('images'):
     os.mkdir('images')
