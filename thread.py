@@ -11,6 +11,7 @@ try:
     import unidecode as unidecode
 except ModuleNotFoundError:
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'unidecode'])
+    import unidecode as unidecode
 
 
 class Downloader:
