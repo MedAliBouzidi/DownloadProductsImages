@@ -11,6 +11,11 @@ try:
 except ModuleNotFoundError:
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'unidecode'])
     import unidecode as unidecode
+try:
+    from tqdm import tqdm
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'tqdm'])
+    from tqdm import tqdm
 
 
 class Downloader:
@@ -22,8 +27,7 @@ class Downloader:
         t.start()
 
     def download(self):
-        status = ''
-        for i, url in enumerate(self.urls, start=1):
+        for url in tqdm(self.urls):
             image_url = url['link']  # the image on the web
             save_name = f'{self.download_path}/{url["name"]}'  # local name to be saved
             if not os.path.exists(self.download_path):
@@ -31,11 +35,8 @@ class Downloader:
             if not os.path.exists(save_name):
                 try:
                     urllib.request.urlretrieve(image_url, save_name)
-                    status = 'done'
                 except:
-                    status = 'fail'
-            print(f'{i}/{self.total_num} - {status}')
-            i += 1
+                    continue
 
 
 def normalize(s):
