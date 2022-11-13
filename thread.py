@@ -19,7 +19,7 @@ class Downloader:
         self.urls = urls
         self.download_path = download_path
         self.total_num = len(self.urls)
-        t = threading.Thread(target=self.download())
+        t = threading.Thread(target=self.download)
         t.start()
 
     def download(self):
