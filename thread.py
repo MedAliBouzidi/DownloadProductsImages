@@ -1,10 +1,16 @@
-import threading
 
-import json
 import os
 import ssl
+import sys
+import json
+import threading
+import subprocess
 import urllib.request
-import unidecode as unidecode
+
+try:
+    import unidecode as unidecode
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'unidecode'])
 
 
 class Downloader:
